@@ -4,7 +4,15 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx ts-node-dev --respawn --transpile-only src/api.ts"
+    "dev": "npx ts-node-dev --respawn --transpile-only src/api.ts",
+    "build": "npx tsc",
+    "migration:show": "./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:show -d config/typeormConfig.ts",
+    "create:entity": "./node_modules/.bin/ts-node ./node_modules/.bin/typeorm entity:create",
+    "migration:generate": "./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:generate -d config/typeormConfig.ts -o src/migrations/",
+    "migration:create": "./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:create",
+    "migration:up": "./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:run -d config/typeormConfig.ts",
+    "migration:down": "./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:revert -d config/typeormConfig.ts",
+    "typeorm": "./node_modules/.bin/ts-node ./node_modules/.bin/typeorm"
   },
   "keywords": [],
   "author": "",
@@ -12,13 +20,19 @@
   "description": "",
   "dependencies": {
     "@types/jest": "^29.5.14",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "crypto-ts": "^1.0.2",
+    "dotenv": "^16.4.7",
     "express": "^5.1.0",
     "jest": "^29.7.0",
+    "mysql2": "^3.14.0",
     "reflect-metadata": "^0.2.2",
     "supertest": "^7.1.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "typeorm": "^0.3.21"
   },
   "devDependencies": {
     "@types/express": "^5.0.1",
