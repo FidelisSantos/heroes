@@ -1,6 +1,6 @@
 type TPaginate = {
-    total?: number,
-    page?: number,
+    total: number,
+    page: number,
     lastPage: number
 };
 

@@ -1,31 +1,44 @@
-import { IsString, IsNotEmpty, IsOptional, IsDate, IsUrl } from "class-validator";
-import { Type } from "class-transformer";
+class CreateHeroDTO {
+    constructor(
+        public name: string,
+        public nickname: string,
+        public date_of_birth: Date,
+        public universe: string,
+        public main_power: string,
+        public avatar_url?: string
+    ) {}
 
-export class CreateHeroDTO {
-    @IsString()
-    @IsNotEmpty({ message: "O nome é obrigatório" })
-    name: string;
+    validate() {
+        const errors: string[] = [];
 
-    @IsString()
-    @IsNotEmpty({ message: "O apelido é obrigatório" })
-    nickname: string;
+        if (!this.name?.trim()) {
+            errors.push("O nome é obrigatório.");
+        } else if (/\d/.test(this.name)) {
+            errors.push("O nome não pode conter números.");
+        }
 
-    @IsDate()
-    @Type(() => Date)
-    @IsNotEmpty({ message: "A data de nascimento é obrigatória" })
-    date_of_birth: Date;
+        if (!this.nickname) {
+            errors.push("O apelido é obrigatório.");
+        }
 
-    @IsString()
-    @IsNotEmpty({ message: "O universo é obrigatório" })
-    universe: string;
+        if (!this.date_of_birth || isNaN(new Date(this.date_of_birth).getTime())) {
+            errors.push("A data de nascimento é obrigatória.");
+        }
 
-    @IsString()
-    @IsNotEmpty({ message: "O principal poder é obrigatório" })
-    main_power: string;
+        if (!this.universe) {
+            errors.push("O universo é obrigatório.");
+        }
 
-    @IsOptional()
-    @IsUrl({}, { message: "A URL do avatar deve ser válida" })
-    avatar_url?: string;
+        if (!this.main_power) {
+            errors.push("O principal poder é obrigatório.");
+        }
+
+        if (this.avatar_url && !/^https?:\/\/.+\..+/.test(this.avatar_url)) {
+            errors.push("A URL do avatar deve ser válida.");
+        }
+
+        return errors;
+    }
 }
 
 export default CreateHeroDTO;

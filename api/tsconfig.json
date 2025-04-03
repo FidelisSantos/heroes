@@ -4,17 +4,21 @@
        "es5",
        "es6"
     ],
-    "target": "es5",
-    "module": "commonjs",
+    "target": "ES2021",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "outDir": "./dist",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
     "sourceMap": true,
     "resolveJsonModule": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "strictPropertyInitialization": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true
   },
-    "include": ["src/**/*.ts"],
+    "include": ["src/**/*.ts", "test/**/*.spec.ts"],
     "exclude": ["node_modules"]
   }
   

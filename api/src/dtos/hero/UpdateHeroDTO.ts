@@ -1,47 +1,51 @@
-import { IsString, IsNotEmpty, IsOptional, IsDate, IsUrl } from "class-validator";
-import { Transform, Type } from "class-transformer";
 import CryptoHelper from "../../helpers/CryptHelper";
 
-export class UpdateHeroDto {
-    @IsNotEmpty({ message: "O ID é obrigatório" })
-    @IsString()
-    @Transform(({ value }) => {
-        const decryptedValue = CryptoHelper.decrypt(value);
-        const parsedNumber = Number(decryptedValue);
+export class UpdateHeroDTO {
+    constructor(
+        public id: number,
+        public name: string,
+        public nickname: string,
+        public date_of_birth: Date | string,
+        public universe: string,
+        public main_power: string,
+        public avatar_url?: string
+    ) {}
+    
+    validate(): string[] {
+        const errors: string[] = [];
 
-        if (isNaN(parsedNumber)) {
-            throw new Error("ID inválido");
+        if (this.id === null) {
+            errors.push("ID inválido.");
         }
 
-        return parsedNumber;
-    })
-    id: number;
-    
-    @IsString()
-    @IsNotEmpty({ message: "O nome é obrigatório" })
-    name: string;
+        if (!this.name?.trim()) {
+            errors.push("O nome é obrigatório.");
+        } else if (/\d/.test(this.name)) {
+            errors.push("O nome não pode conter números.");
+        }
 
-    @IsString()
-    @IsNotEmpty({ message: "O apelido é obrigatório" })
-    nickname: string;
+        if (!this.nickname) {
+            errors.push("O apelido é obrigatório.");
+        }
 
-    @IsDate()
-    @Type(() => Date)
-    @IsNotEmpty({ message: "A data de nascimento é obrigatória" })
-    date_of_birth: Date;
+        if (!this.date_of_birth || isNaN(new Date(this.date_of_birth).getTime())) {
+            errors.push("A data de nascimento é obrigatória.");
+        }
 
-    @IsString()
-    @IsNotEmpty({ message: "O universo é obrigatório" })
-    universe: string;
+        if (!this.universe) {
+            errors.push("O universo é obrigatório.");
+        }
 
-    @IsString()
-    @IsNotEmpty({ message: "O principal poder é obrigatório" })
-    main_power: string;
+        if (!this.main_power) {
+            errors.push("O principal poder é obrigatório.");
+        }
+        
+        if (this.avatar_url && !/^https?:\/\/.+\..+/.test(this.avatar_url)) {
+            errors.push("A URL do avatar deve ser válida.");
+        }
 
-    @IsOptional()
-    @IsUrl({}, { message: "A URL do avatar deve ser válida" })
-    avatar_url?: string;
+        return errors;
+    }
 }
 
-
-export default UpdateHeroDto;
+export default UpdateHeroDTO;

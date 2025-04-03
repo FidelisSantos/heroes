@@ -1,16 +1,14 @@
-import CreateHeroDTO from "../../dtos/hero/CreateHeroDTO";
-import UpdateHeroDto from "../../dtos/hero/UpdateHeroDTO";
 import HeroResponse from "../../models/hero/HeroResponse";
 import HeroResponsePagination from "../../models/hero/HeroResponsePagination";
 import TPaginate from "../../type/TPaginate";
-import TParams from "../../type/TParams";
+import TParamsHero from "../../type/TParamsHero";
 
 interface IHeroService {
-    create(hero: CreateHeroDTO): Promise<HeroResponse>;
-    update(hero: Partial<UpdateHeroDto>): Promise<HeroResponse>;
-    get(params: TParams, paginate: TPaginate): Promise<HeroResponsePagination[]>
-    find(params: TParams): Promise<HeroResponse>;
+    create(data: any): Promise<HeroResponse>;
+    update(data: any, id: string): Promise<HeroResponse>;
+    get(params: TParamsHero, paginate: TPaginate): Promise<HeroResponsePagination>
     changeStatus(id: string, status: boolean): Promise<HeroResponse>;
+    delete(id: string): Promise<void>;
 }
 
 export default IHeroService;

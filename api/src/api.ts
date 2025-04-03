@@ -1,5 +1,6 @@
 import express from "express";
 import TypeOrm from "./builder/typeorm";
+import "reflect-metadata";
 
 const app = express();
 const PORT = 5555;
