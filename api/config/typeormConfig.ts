@@ -1,7 +1,6 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
 import * as env from "dotenv"
-
 env.config()
 
 const AppDataSource = new DataSource({
@@ -12,14 +11,14 @@ const AppDataSource = new DataSource({
   database: process.env.MYSQL_DATABASE || "heroesDb",
   username: process.env.MYSQL_USER || "root",
   synchronize: true,
-  logging: false,
+  logging: true,
   entities: [
-    "src/entity/*.ts"
+    "dist/src/entity/*.js"
   ],
   migrations:[
-   "migrations/*.ts"
+   "dist/src/migrations/*.js"
   ],
   subscribers: [],
-})
+});
 
 export default AppDataSource;

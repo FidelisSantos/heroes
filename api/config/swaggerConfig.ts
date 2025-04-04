@@ -50,16 +50,34 @@ const swaggerOptions = {
         UpdateHeroDTO: {
           type: "object",
           properties: {
-            id: { type: "integer", example: 2 },
             name: { type: "string", example: "Flash" },
             nickname: { type: "string", example: "Velocista Escarlate" },
             date_of_birth: { type: "string", format: "date", example: "1990-03-20" },
             universe: { type: "string", example: "DC Comics" },
             main_power: { type: "string", example: "Super Velocidade" },
             avatar_url: { type: "string", example: "https://exemplo.com/flash.jpg" },
-          },
+          }
         },
-      },
+        HeroResponsePagination: {
+            type: "object",
+            properties: {
+                data: {
+                type: "array",
+                items: {
+                    $ref: "#/components/schemas/Hero"
+                }
+                },
+                pagination: {
+                type: "object",
+                properties: {
+                    total: { type: "integer", example: 1 },
+                    page: { type: "integer", example: 1 },
+                    lastPage: { type: "integer", example: 1 }
+                }
+                }
+            }
+        }
+    },
     },
   },
   apis: ["./src/routes/*.ts"], // Garante que a documentação das rotas será gerada

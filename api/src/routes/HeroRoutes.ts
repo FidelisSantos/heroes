@@ -42,7 +42,7 @@ class HeroRoutes {
          *         name: id
          *         required: true
          *         schema:
-         *           type: integer
+         *           type: string
          *     requestBody:
          *       required: true
          *       content:
@@ -66,7 +66,7 @@ class HeroRoutes {
          *         name: id
          *         required: true
          *         schema:
-         *           type: integer
+         *           type: string
          *     responses:
          *       204:
          *         description: Herói excluído com sucesso
@@ -87,11 +87,11 @@ class HeroRoutes {
          *             schema:
          *               type: array
          *               items:
-         *                 $ref: '#/components/schemas/Hero'
+         *                 $ref: '#/components/schemas/HeroResponsePagination'
          */
         this.router.get("/", this.get);
 
-        /**
+       /**
          * @swagger
          * /hero/{id}/status:
          *   put:
@@ -102,10 +102,28 @@ class HeroRoutes {
          *         name: id
          *         required: true
          *         schema:
-         *           type: integer
+         *           type: string
+         *     requestBody:
+         *       required: true
+         *       content:
+         *         application/json:
+         *           schema:
+         *             type: object
+         *             properties:
+         *               status:
+         *                 type: boolean
+         *                 example: true
          *     responses:
          *       200:
          *         description: Status do herói alterado com sucesso
+         *         content:
+         *           application/json:
+         *             schema:
+         *               type: object
+         *               properties:
+         *                 status:
+         *                   type: boolean
+         *                   example: true
          */
         this.router.put("/:id/status", this.changeStatus);
     }
