@@ -1,8 +1,7 @@
 type TParamsHero = {
     search:string,
     total?: number,
-    page?: number,
-    lastPage: number
+    page?: number
 }
 
 export default TParamsHero;

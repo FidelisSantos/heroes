@@ -1,5 +1,5 @@
 import { FindManyOptions, FindOneOptions } from "typeorm";
-import { Hero } from "../../entity/Hero";
+import { Hero } from "../../entity/Hero.js";
 
 interface IHeroRepository {
     create(hero: Hero): Promise<Hero>;

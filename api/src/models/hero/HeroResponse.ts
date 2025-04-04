@@ -1,4 +1,4 @@
-import CryptoHelper from "../../helpers/CryptHelper";
+import CryptoHelper from "../../helpers/CryptHelper.js";
 
 class HeroResponse {
     readonly id: string

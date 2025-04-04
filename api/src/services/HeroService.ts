@@ -1,16 +1,16 @@
 import { FindManyOptions, ILike } from "typeorm";
-import CreateHeroDTO  from "../dtos/hero/CreateHeroDTO";
-import UpdateHeroDTO from "../dtos/hero/UpdateHeroDTO";
-import BadRequestError from "../errors/BadRequestError";
-import CryptoHelper from "../helpers/CryptHelper";
-import IMapper from "../interfaces/mapper/IMapper";
-import IHeroRepository from "../interfaces/repositories/IHeroRepository";
-import IHeroService from "../interfaces/services/IHeroService";
-import IHeroValidator from "../interfaces/validators/IHeroValidator";
-import HeroResponse from "../models/hero/HeroResponse";
-import HeroResponsePagination from "../models/hero/HeroResponsePagination";
-import TParamsHero from "../type/TParamsHero";
-import { Hero } from "../entity/Hero";
+import CreateHeroDTO  from "../dtos/hero/CreateHeroDTO.js";
+import UpdateHeroDTO from "../dtos/hero/UpdateHeroDTO.js";
+import BadRequestError from "../errors/BadRequestError.js";
+import CryptoHelper from "../helpers/CryptHelper.js";
+import IMapper from "../interfaces/mapper/IMapper.js";
+import IHeroRepository from "../interfaces/repositories/IHeroRepository.js";
+import IHeroService from "../interfaces/services/IHeroService.js";
+import IHeroValidator from "../interfaces/validators/IHeroValidator.js";
+import HeroResponse from "../models/hero/HeroResponse.js";
+import HeroResponsePagination from "../models/hero/HeroResponsePagination.js";
+import TParamsHero from "../type/TParamsHero.js";
+import { Hero } from "../entity/Hero.js";
 
 class HeroService implements IHeroService {
     constructor (

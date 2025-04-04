@@ -1,14 +1,12 @@
-import CryptoHelper from "../../helpers/CryptHelper";
-
 export class UpdateHeroDTO {
     constructor(
         public id: number,
         public name: string,
         public nickname: string,
-        public date_of_birth: Date | string,
+        public date_of_birth: Date,
         public universe: string,
         public main_power: string,
-        public avatar_url?: string
+        public avatar_url: string
     ) {}
     
     validate(): string[] {

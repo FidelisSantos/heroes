@@ -3,32 +3,32 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 @Entity({ name: "heroes" })
 export class Hero {
     @PrimaryGeneratedColumn()
-    id: number;
+    id!: number;
 
     @Column({ nullable: false })
-    name: string;
+    name!: string;
 
     @Column({ nullable: false })
-    nickname: string;
+    nickname!: string;
 
     @Column({ type: "timestamp", nullable: false })
-    date_of_birth: Date;
+    date_of_birth!: Date;
 
     @Column({ nullable: false })
-    universe: string;
+    universe!: string;
 
     @Column({ nullable: false })
-    main_power: string;
+    main_power!: string;
 
     @Column({ nullable: true })
-    avatar_url: string;
+    avatar_url!: string;
 
     @Column({ default: true })
-    is_active: boolean;
+    is_active!: boolean;
 
     @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
-    created_at: Date;
+    created_at!: Date;
 
     @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP", onUpdate: "CURRENT_TIMESTAMP" })
-    updated_at: Date;
+    updated_at!: Date;
 }
