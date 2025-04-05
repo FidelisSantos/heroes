@@ -1,0 +1,11 @@
+@use "../settings/variables" as vars;
+
+@mixin responsive($device) {
+  @if map-has-key(vars.$breakpoints, $device) {
+    @media (max-width: #{map-get(vars.$breakpoints, $device)}) {
+      @content;
+    }
+  } @else {
+    @warn "Breakpoint #{$device} não encontrado!";
+  }
+}
