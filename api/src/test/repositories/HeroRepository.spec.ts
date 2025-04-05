@@ -1,12 +1,12 @@
 import { Repository } from "typeorm";
-import HeroRepository from "../../src/repositories/HeroRepository";
-import { Hero } from "../../src/entity/Hero";
+import HeroRepository from "../../repositories/HeroRepository.js";
+import { Hero } from "../../entity/Hero.js";
+import { jest, describe, beforeEach, it, expect } from '@jest/globals';
 
 
 jest.mock("typeorm", () => {
     const actualTypeOrm = jest.requireActual("typeorm");
     return {
-        ...actualTypeOrm,
         Repository: jest.fn().mockImplementation(() => ({
             save: jest.fn(),
             findAndCount: jest.fn(),
@@ -33,7 +33,7 @@ describe("HeroRepository", () => {
         heroRepository = new HeroRepository(mockRepository);
     });
 
-    test("create() deve salvar e retornar o herói", async () => {
+    it("create() deve salvar e retornar o herói", async () => {
         const hero: Hero = {
             id: 1,
             name: "Superman",
@@ -54,7 +54,7 @@ describe("HeroRepository", () => {
         expect(result).toEqual(hero);
     });
 
-    test("update() deve atualizar e retornar o herói", async () => {
+    it("update() deve atualizar e retornar o herói", async () => {
         const hero: Hero = {
             id: 1,
             name: "Superman",
@@ -75,7 +75,7 @@ describe("HeroRepository", () => {
         expect(result).toEqual(hero);
     });
 
-    test("get() deve retornar uma lista de heróis e a contagem total", async () => {
+    it("get() deve retornar uma lista de heróis e a contagem total", async () => {
         const heroes: Hero[] = [{
             id: 1,
             name: "Superman",
@@ -96,7 +96,7 @@ describe("HeroRepository", () => {
         expect(result).toEqual([heroes, 1]);
     });
 
-    test("find() deve retornar um herói específico", async () => {
+    it("find() deve retornar um herói específico", async () => {
         const hero: Hero = {
             id: 1,
             name: "Superman",
@@ -117,7 +117,7 @@ describe("HeroRepository", () => {
         expect(result).toEqual(hero);
     });
 
-    test("changeStatus() deve atualizar o status e retornar o herói atualizado", async () => {
+    it("changeStatus() deve atualizar o status e retornar o herói atualizado", async () => {
         const hero: Hero = {
             id: 1,
             name: "Superman",
@@ -140,7 +140,7 @@ describe("HeroRepository", () => {
         expect(result).toEqual({ ...hero, is_active: true });
     });
 
-    test("exists() deve retornar true se o herói existir", async () => {
+    it("exists() deve retornar true se o herói existir", async () => {
         mockRepository.findOne.mockResolvedValue({
             id: 1,
             name: "Superman",
@@ -160,7 +160,7 @@ describe("HeroRepository", () => {
         expect(result).toBe(true);
     });
 
-    test("exists() deve retornar false se o herói não existir", async () => {
+    it("exists() deve retornar false se o herói não existir", async () => {
         mockRepository.findOne.mockResolvedValue(null);
 
         const result = await heroRepository.exists({ where: { id: 2 } });
@@ -169,7 +169,7 @@ describe("HeroRepository", () => {
         expect(result).toBe(false);
     });
 
-    test("delete() deve chamar o método de exclusão", async () => {
+    it("delete() deve chamar o método de exclusão", async () => {
         mockRepository.delete.mockResolvedValue({ affected: 1 } as any);
 
         await heroRepository.delete(1);

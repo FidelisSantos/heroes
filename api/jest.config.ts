@@ -2,13 +2,21 @@ export default {
     preset: "ts-jest",
     testEnvironment: "node",
     transform: {
-      "^.+\\.tsx?$": "ts-jest",
-      "^.+\\.(ts|tsx)$": "babel-jest",
-      "^.+\\.(js|jsx)$": "babel-jest",
+        "^.+\\.tsx?$": "ts-jest",
+        "^.+\\.(js|jsx|ts|tsx)$": [
+            "ts-jest",
+            {
+                useESM: true
+            }
+        ]
     },
-    transformIgnorePatterns: [
-        "node_modules/(?!@babel/runtime)"
-    ],
-    moduleFileExtensions: ["ts", "tsx", "js", "json", "node"],
-    extensionsToTreatAsEsm: ['.ts']
+    moduleNameMapper: {
+        "^(\\.{1,2}/.*)\\.js$": "$1"
+    },
+    extensionsToTreatAsEsm: [".ts"],
+    globals: {
+        "ts-jest": {
+            useESM: true
+        }
+    }
 };

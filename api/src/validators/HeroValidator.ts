@@ -1,9 +1,9 @@
 import { Not } from "typeorm";
-import CreateHeroDTO from "../dtos/hero/CreateHeroDTO.js";
-import UpdateHeroDTO from "../dtos/hero/UpdateHeroDTO.js";
-import IHeroRepository from "../interfaces/repositories/IHeroRepository.js";
-import IHeroValidator from "../interfaces/validators/IHeroValidator.js";
-import TValidatorHero from "../type/TValidatorHero.js";
+import CreateHeroDTO from "../dtos/hero/CreateHeroDTO";
+import UpdateHeroDTO from "../dtos/hero/UpdateHeroDTO";
+import IHeroRepository from "../interfaces/repositories/IHeroRepository";
+import IHeroValidator from "../interfaces/validators/IHeroValidator";
+import TValidatorHero from "../type/TValidatorHero";
 
 class HeroValidator implements IHeroValidator{
     constructor(private heroRepository: IHeroRepository){}

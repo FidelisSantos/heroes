@@ -1,13 +1,14 @@
-import HeroService from "../../src/services/HeroService";
-import CreateHeroDTO from "../../src/dtos/hero/CreateHeroDTO";
-import HeroResponse from "../../src/models/hero/HeroResponse";
-import BadRequestError from "../../src/errors/BadRequestError";
-import { Hero } from "../../src/entity/Hero";
-import IHeroRepository from "../../src/interfaces/repositories/IHeroRepository";
-import IHeroValidator from "../../src/interfaces/validators/IHeroValidator";
-import IMapper from "../../src/interfaces/mapper/IMapper";
-import UpdateHeroDTO from "../../src/dtos/hero/UpdateHeroDTO";
-import CryptoHelper from "../../src/helpers/CryptHelper";
+import HeroService from "../../services/HeroService.js";
+import CreateHeroDTO from "../../dtos/hero/CreateHeroDTO.js";
+import HeroResponse from "../../models/hero/HeroResponse.js";
+import BadRequestError from "../../errors/BadRequestError.js";
+import { Hero } from "../../entity/Hero.js";
+import IHeroRepository from "../../interfaces/repositories/IHeroRepository.js";
+import IHeroValidator from "../../interfaces/validators/IHeroValidator.js";
+import IMapper from "../../interfaces/mapper/IMapper.js";
+import UpdateHeroDTO from "../../dtos/hero/UpdateHeroDTO.js";
+import CryptoHelper from "../../helpers/CryptHelper.js";
+import { jest, describe, beforeEach, it, expect } from '@jest/globals';
 
 describe("HeroService", () => {
     let heroService: HeroService;

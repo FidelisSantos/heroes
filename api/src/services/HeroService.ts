@@ -87,7 +87,10 @@ class HeroService implements IHeroService {
         const options: FindManyOptions<Hero> = {
             where: whereClause.OR ? whereClause : undefined,
             take: total,
-            skip: (page - 1) * total
+            skip: (page - 1) * total,
+            order: {
+                created_at: "DESC"  // Ordenação por created_at desc
+            }
         };
     
         const [heroes, count] = await this.heroRepository.get(options);

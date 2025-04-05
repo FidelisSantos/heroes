@@ -1,6 +1,6 @@
 import { FindManyOptions, FindOneOptions, Repository } from "typeorm";
-import { Hero } from "../entity/Hero.js";
-import IHeroRepository from "../interfaces/repositories/IHeroRepository.js";
+import { Hero } from "../entity/Hero";
+import IHeroRepository from "../interfaces/repositories/IHeroRepository";
 
 class HeroRepository implements IHeroRepository{
     constructor(private repository: Repository<Hero>) {}

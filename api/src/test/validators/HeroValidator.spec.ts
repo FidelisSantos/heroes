@@ -1,8 +1,9 @@
-import HeroValidator from "../../src/validators/HeroValidator";
-import IHeroRepository from "../../src/interfaces/repositories/IHeroRepository";
-import CreateHeroDTO from "../../src/dtos/hero/CreateHeroDTO";
-import UpdateHeroDTO from "../../src/dtos/hero/UpdateHeroDTO";
-import CryptoHelper from "../../src/helpers/CryptHelper";
+import HeroValidator from "../../validators/HeroValidator.js";
+import IHeroRepository from "../../interfaces/repositories/IHeroRepository.js";
+import CreateHeroDTO from "../../dtos/hero/CreateHeroDTO.js";
+import UpdateHeroDTO from "../../dtos/hero/UpdateHeroDTO.js";
+import CryptoHelper from "../../helpers/CryptHelper.js";
+import { jest, describe, beforeEach, it, expect } from '@jest/globals';
 
 describe("HeroValidator", () => {
     let heroRepositoryMock: jest.Mocked<IHeroRepository>;

@@ -1,5 +1,5 @@
 import express from "express";
-import * as bodyParser from "body-parser";
+import cors from "cors";
 import ErrorMiddleware from "./middlewares/ErrorMiddleware.js";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "../config/swaggerConfig.js";
@@ -31,6 +31,7 @@ class App {
   }
 
   private config() {
+    this.app.use(cors());
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
