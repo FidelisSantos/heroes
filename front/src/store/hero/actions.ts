@@ -49,10 +49,10 @@ export const deleteHero = createAsyncThunk(
 export const changeHeroStatus = createAsyncThunk(
     "hero/changeHeroStatus",
     async ({ id, status }: { id: string; status: boolean }, { rejectWithValue }) => {
-        try {
-            return await heroService.changeHeroStatus(id, status);
-        } catch (error: any) {
-            return rejectWithValue(error.message);
-        }
+      try {
+        return await heroService.changeHeroStatus(id, status);
+      } catch (error: any) {
+        return rejectWithValue(error.message);
+      }
     }
 );

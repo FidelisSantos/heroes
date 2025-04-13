@@ -13,13 +13,35 @@
             padding: 40px;
             justify-content: center;
             align-items: center;
+
+            @include mixins.responsive('mobile') {
+              flex-direction:column;
+              padding: 60px;
+              gap: 10px;
+            }
+
             &__add {
-                margin-top: 10px;
+                margin-top: 5px;
                 font-size: 20px;
+                @include mixins.responsive('mobile') {
+                  width: 100% !important;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  &__button{
+                    width: 100% !important;
+                    &_btn {
+                      width: 100% !important;
+                    }
+                  }
+                }
             }
             &__search {
                 display: flex;
                 width: 90%;
+                @include mixins.responsive('mobile') {
+                  width: 100%;
+                }
                 margin: 0px 20px;
                 &__input {
                     width: 100%;
@@ -55,6 +77,7 @@
 
         @include mixins.responsive('mobile') {
             grid-template-columns: repeat(1, 1fr);
+            padding: 80px 40px;
         }
         &__card {
             display: flex;
@@ -64,6 +87,7 @@
             margin: 0; 
             padding: 10px;
             height: auto;
+            width: 100%;
             &__img {
                 &:not(.active) {
                     filter: grayscale(1);
@@ -73,7 +97,7 @@
                 object-fit: cover;
                 display: block;
                 aspect-ratio: 1 / 1;
-                object-fit: cover;
+                object-position: top;
             }
             &__content {
                 padding: 10px;

@@ -10,25 +10,22 @@ import {
 } from "../store/hero/actions"; // Ajuste para importar da store Redux
 import THeroResponse from "../types/THeroResponse";
 import THeroRequest from "../types/THeroRequest";
-import useApp from "./useApp";
 
 function useHero() {
   const dispatch = useDispatch();
-  const { setLoading } = useApp();
   const { heroes, loading, pagination } = useSelector((state: RootState) => state.hero);
 
   const [hero, setHero] = useState<THeroResponse | null>(null);
   const [openModal, setOpenModal] = useState(false);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
 
   const loadHeroes = useCallback(
     (append = false) => {
-      setLoading(true);
       dispatch(fetchHeroes({ page, search, append }) as any)
-        .finally(() => setLoading(false));
     },
-    [dispatch, page, search, setLoading]
+    [dispatch, page, search]
   );
 
   useEffect(() => {
@@ -43,11 +40,20 @@ function useHero() {
   }
 
   function addHero(heroData: THeroRequest) {
-    dispatch(createHero(heroData) as any);
+    const formattedHeroData = {
+      ...heroData,
+      date_of_birth: heroData.date_of_birth.split("/").reverse().join("-"), // Converte DD/MM/YYYY → YYYY-MM-DD
+    };
+  
+    dispatch(createHero(formattedHeroData) as any);
+    fetchHeroes({ page: 1, search: "", append: false });
+    toggleModal(null, false);
   }
 
   function editHero(id: string, heroData: THeroRequest) {
     dispatch(updateHero({ id, hero: heroData }) as any);
+
+    toggleModal(null, false);
   }
 
   function removeHero(id: string) {
@@ -58,9 +64,10 @@ function useHero() {
     dispatch(changeHeroStatus({ id, status }) as any);
   }
 
-  function toggleModal(hero: THeroResponse | null) {
+  function toggleModal(hero: THeroResponse | null, isEditingHero: boolean) {
     setHero(hero);
     setOpenModal(!openModal);
+    setIsEditing(isEditingHero);
   }
 
   return {
@@ -74,7 +81,9 @@ function useHero() {
     editHero,     
     removeHero,  
     toggleHeroStatus,
-    setSearch
+    setSearch,
+    isEditing,
+    loadHeroes
   };
 }
 

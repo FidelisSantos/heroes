@@ -133,7 +133,7 @@ class HeroRoutes {
             await heroController.create(req, res);
             return
         } catch (error) {
-            next(error); // Pass the error to the next middleware
+            next(error);
         }
     }
 

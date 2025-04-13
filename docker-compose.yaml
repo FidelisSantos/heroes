@@ -15,10 +15,11 @@ services:
       - MYSQL_DATABASE=heroesDb
     depends_on:
       - db
-    command: npm run dev
+    command: npm run start
     volumes:
-      -  ./api/migrations:/app/migrations
-
+      - ./api/:/app/
+      - /app/node_modules
+      - /app/dist
   front:
     build:
       context: ./front
@@ -27,7 +28,10 @@ services:
       - "5173:5173"
     depends_on:
       - api
-    command: npm run dev -- --host
+    command: sh -c "npm install && npm run dev -- --host"
+    volumes:
+      - ./front:/app
+      - /app/node_modules
 
   db:
     image: mysql:8

@@ -73,23 +73,19 @@ class HeroService implements IHeroService {
     }
 
     async get(params: TParamsHero): Promise<HeroResponsePagination> {
-        const { page = 1, total = 10 } = params;
+        const { page = 1, total = 10 , search} = params;
 
-        const whereClause: any = {};
-        
-        if (params.search) {
-            whereClause.OR = [
-                { name: ILike(`%${params.search}%`) },
-                { nickname: ILike(`%${params.search}%`) }
-            ];
-        }
-    
         const options: FindManyOptions<Hero> = {
-            where: whereClause.OR ? whereClause : undefined,
+            where: search
+                ? [
+                    { name: ILike(`%${search}%`) },
+                    { nickname: ILike(`%${search}%`) }
+                ]
+                : undefined,
             take: total,
             skip: (page - 1) * total,
-            order: {
-                created_at: "DESC"  // Ordenação por created_at desc
+                order: {
+                created_at: "DESC"
             }
         };
     
