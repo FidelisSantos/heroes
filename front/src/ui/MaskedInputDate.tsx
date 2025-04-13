@@ -2,36 +2,45 @@ import { useState, useEffect } from "react";
 import TMaskedInputDateProps from "../types/TMaskedInputDateProps";
 
 function MaskedInputDate({ className, value, onChange, name, disabled }: TMaskedInputDateProps) {
-  const [dateValue, setDateValue] = useState<string>(value || "");
+  const [inputValue, setInputValue] = useState("");
 
-  // Converte a data no formato "YYYY-MM-DD" para "DD/MM/YYYY"
   useEffect(() => {
     if (value) {
       const [year, month, day] = value.split("-");
-      setDateValue(`${day}/${month}/${year}`);
+      setInputValue(`${day}/${month}/${year}`);
+    } else {
+      setInputValue("");
     }
   }, [value]);
 
+  const formatDate = (val: string) => {
+    const digits = val.replace(/\D/g, "");
+    let result = "";
+
+    if (digits.length <= 2) result = digits;
+    else if (digits.length <= 4) result = `${digits.slice(0, 2)}/${digits.slice(2)}`;
+    else result = `${digits.slice(0, 2)}/${digits.slice(2, 4)}/${digits.slice(4, 8)}`;
+
+    return result;
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let val = e.target.value.replace(/\D/g, ""); // Remove tudo que não for número
+    const raw = e.target.value;
+    const masked = formatDate(raw);
+    setInputValue(masked);
 
-    if (val.length > 8) val = val.slice(0, 8); // Limita a 8 caracteres
-
-    let maskedValue = val;
-    if (val.length > 2) maskedValue = `${val.slice(0, 2)}/${val.slice(2)}`;
-    if (val.length > 4) maskedValue = `${val.slice(0, 2)}/${val.slice(2, 4)}/${val.slice(4)}`;
-
-    setDateValue(maskedValue);
-
-    // Chama a função de onChange passando o valor sem máscara (YYYY-MM-DD)
-    const formattedValue = `${maskedValue.slice(6) || "01"}-${maskedValue.slice(3, 5) || "01"}-${maskedValue.slice(0, 2) || "01"}`;
-    onChange(formattedValue); // Envia a data no formato YYYY-MM-DD
+    if (masked.length === 10) {
+      const [dd, mm, yyyy] = masked.split("/");
+      onChange(`${yyyy}-${mm}-${dd}`);
+    } else {
+      onChange("");
+    }
   };
 
   return (
     <input
       type="text"
-      value={dateValue}
+      value={inputValue}
       onChange={handleChange}
       placeholder="DD/MM/AAAA"
       maxLength={10}

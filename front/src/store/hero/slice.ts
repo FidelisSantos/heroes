@@ -48,7 +48,7 @@ const heroSlice = createSlice({
         state.error = null;
       })
       .addCase(createHero.fulfilled, (state, action) => {
-        state.heroes.unshift(action.payload); // novo no topo
+        state.heroes.unshift(action.payload);
         state.loading = false;
       })
       .addCase(createHero.rejected, (state, action) => {

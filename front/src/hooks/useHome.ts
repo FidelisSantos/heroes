@@ -1,13 +1,13 @@
 import { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store/store"; // Ajuste conforme sua estrutura
+import { RootState } from "../store/store";
 import { 
   fetchHeroes, 
   createHero, 
   updateHero, 
   deleteHero, 
   changeHeroStatus 
-} from "../store/hero/actions"; // Ajuste para importar da store Redux
+} from "../store/hero/actions";
 import THeroResponse from "../types/THeroResponse";
 import THeroRequest from "../types/THeroRequest";
 
@@ -42,7 +42,7 @@ function useHero() {
   function addHero(heroData: THeroRequest) {
     const formattedHeroData = {
       ...heroData,
-      date_of_birth: heroData.date_of_birth.split("/").reverse().join("-"), // Converte DD/MM/YYYY → YYYY-MM-DD
+      date_of_birth: heroData.date_of_birth.split("/").reverse().join("-"),
     };
   
     dispatch(createHero(formattedHeroData) as any);
