@@ -125,6 +125,13 @@
       align-items: center;
       gap: 8px;
       padding: 16px;
+      &__icon{
+        transform: 0.3s;
+        &:hover {
+          scale: 1.1;
+          cursor: pointer;
+        }
+      }
       &__button {
         padding: 6px 12px;
         border: 1px solid #ccc;

@@ -50,7 +50,7 @@ function Home() {
               { pagination.lastPage && pagination.lastPage > 1 &&
                 <div className="home__pagination">
                   { page >= pagination.lastPage &&
-                    <div onClick={() => setPage(page - 1)}>
+                    <div onClick={() => setPage(page - 1)} className="home__pagination__icon">
                       <Icons.PrevPage/>
                     </div>
                   }
@@ -69,7 +69,7 @@ function Home() {
                     })
                   }
                   { page < pagination.lastPage &&
-                    <div onClick={() => setPage(page + 1)}>
+                    <div onClick={() => setPage(page + 1)} className="home__pagination__icon">
                       <Icons.NextPage/>
                     </div>
                   }
