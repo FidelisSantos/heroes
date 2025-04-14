@@ -13,7 +13,7 @@ import THeroRequest from "../types/THeroRequest";
 
 function useHero() {
   const dispatch = useDispatch();
-  const { heroes, loading, pagination } = useSelector((state: RootState) => state.hero);
+  const { heroes, loading, pagination, error, errorMessage } = useSelector((state: RootState) => state.hero);
 
   const [hero, setHero] = useState<THeroResponse | null>(null);
   const [openModal, setOpenModal] = useState(false);
@@ -39,29 +39,30 @@ function useHero() {
     }
   }
 
-  function addHero(heroData: THeroRequest) {
+  async function addHero(heroData: THeroRequest) {
     const formattedHeroData = {
       ...heroData,
       date_of_birth: heroData.date_of_birth.split("/").reverse().join("-"),
     };
-  
-    dispatch(createHero(formattedHeroData) as any);
-    fetchHeroes({ page: 1, search: "", append: false });
+    await dispatch(createHero(formattedHeroData) as any);
+    toggleModal(null, false);
+    await dispatch(fetchHeroes({ page, search, append: false }) as any)
+  }
+
+  async function editHero(id: string, heroData: THeroRequest) {
+    await dispatch(updateHero({ id, hero: heroData }) as any);
     toggleModal(null, false);
   }
 
-  function editHero(id: string, heroData: THeroRequest) {
-    dispatch(updateHero({ id, hero: heroData }) as any);
-
-    toggleModal(null, false);
+  async function removeHero(id: string) {
+    await dispatch(deleteHero(id) as any);
+    const newPage = (pagination.total - 1) <= (page - 1) * 10 && page > 1 ? page - 1 : page;
+    setPage(newPage);
+    await dispatch(fetchHeroes({ page, search, append: false }) as any)
   }
 
-  function removeHero(id: string) {
-    dispatch(deleteHero(id) as any);
-  }
-
-  function toggleHeroStatus(id: string, status: boolean) {
-    dispatch(changeHeroStatus({ id, status }) as any);
+  async function toggleHeroStatus(id: string, status: boolean) {
+    await dispatch(changeHeroStatus({ id, status }) as any);
   }
 
   function toggleModal(hero: THeroResponse | null, isEditingHero: boolean) {
@@ -83,7 +84,11 @@ function useHero() {
     toggleHeroStatus,
     setSearch,
     isEditing,
-    loadHeroes
+    loadHeroes,
+    setPage,
+    pagination,
+    page,
+    error
   };
 }
 

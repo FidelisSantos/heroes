@@ -3,10 +3,12 @@ import THeroResponse from "./THeroResponse";
 type THeroState = {
     heroes: THeroResponse[];
     loading: boolean;
-    error: string | null;
+    error: boolean;
+    errorMessage: string;
     pagination: {
-      page: number | null;
-      lastPage: number | null;
+      page: number;
+      lastPage: number;
+      total: number;
     };
 }
 

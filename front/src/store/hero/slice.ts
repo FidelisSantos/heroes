@@ -11,11 +11,13 @@ import {
 const initialState: THeroState = {
   heroes: [],
   pagination: {
-    page: null,
-    lastPage: null,
+    page: 0,
+    lastPage: 0,
+    total: 0
   },
   loading: false,
-  error: null,
+  error: false,
+  errorMessage: ""
 };
 
 const heroSlice = createSlice({
@@ -25,12 +27,16 @@ const heroSlice = createSlice({
     setPage(state, action) {
       state.pagination.page = action.payload;
     },
+    clearError(state) {
+      state.error = false;
+      state.errorMessage = "";
+    }
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchHeroes.pending, (state) => {
         state.loading = true;
-        state.error = null;
+
       })
       .addCase(fetchHeroes.fulfilled, (state, action) => {
         state.loading = false;
@@ -41,23 +47,30 @@ const heroSlice = createSlice({
       })
       .addCase(fetchHeroes.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        state.error = true;
+        state.errorMessage = action.payload as string;
       })
       .addCase(createHero.pending, (state) => {
         state.loading = true;
-        state.error = null;
       })
       .addCase(createHero.fulfilled, (state, action) => {
         state.heroes.unshift(action.payload);
+
+        if (state.heroes.length > 10) {
+          state.heroes.pop();
+        }
+
+        state.pagination.lastPage = Math.ceil(state.pagination.total / 10);
+
         state.loading = false;
       })
       .addCase(createHero.rejected, (state, action) => {
+        state.errorMessage = action.payload as string;
+        state.error = true;
         state.loading = false;
-        state.error = action.payload as string;
       })
       .addCase(updateHero.pending, (state) => {
         state.loading = true;
-        state.error = null;
       })
       .addCase(updateHero.fulfilled, (state, action) => {
         const updatedHero = { ...action.payload, is_active: true };
@@ -68,11 +81,11 @@ const heroSlice = createSlice({
       })
       .addCase(updateHero.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        state.error = true;
+        state.errorMessage = action.payload as string;
       })
       .addCase(deleteHero.pending, (state) => {
         state.loading = true;
-        state.error = null;
       })
       .addCase(deleteHero.fulfilled, (state, action) => {
         state.loading = false;
@@ -80,11 +93,11 @@ const heroSlice = createSlice({
       })
       .addCase(deleteHero.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        state.error = true;
+        state.errorMessage = action.payload as string;
       })
       .addCase(changeHeroStatus.pending, (state) => {
         state.loading = true;
-        state.error = null;
       })
       .addCase(changeHeroStatus.fulfilled, (state, action) => {
         state.loading = false;
@@ -96,10 +109,11 @@ const heroSlice = createSlice({
       })
       .addCase(changeHeroStatus.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        state.error = true;
+        state.errorMessage = action.payload as string;
       });
   },
 });
 
-export const { setPage } = heroSlice.actions;
+export const { setPage, clearError } = heroSlice.actions;
 export default heroSlice.reducer;

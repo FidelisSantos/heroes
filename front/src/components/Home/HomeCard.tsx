@@ -21,22 +21,35 @@ deleteHero
             <h2 className={`${className}__content__title`}>{hero.name}</h2>
             <div className={`${className}__content__actions`}>
               { hero.is_active ?  (
-                  <div onClick={() => changeStaus(hero.id, false)}>
+                  <div onClick={() => {
+                    if (window.confirm(`Tem certeza que deseja desativar ${hero.name}?`)) 
+                      changeStaus(hero.id, false)
+
+                  }}>
                     <Icons.HeroLock data-tooltip-id={`lock-hero-${hero.id}`} color="#2c6b74"/>
                     <Tooltip id={`lock-hero-${hero.id}`} place="top" content="Desabilitar Herói" />
                   </div>
                   
                   ) : (
-                    <div onClick={() => changeStaus(hero.id, true)}>
+                    <div onClick={() =>{
+                      if (window.confirm(`Tem certeza que deseja ativar ${hero.name}?`))
+                        changeStaus(hero.id, true)
+                      }}>
                       <Icons.HeroUnlock data-tooltip-id={`unlock-hero-${hero.id}`}/>
                       <Tooltip id={`unlock-hero-${hero.id}`} place="top" content="Habilitar Herói" />
                     </div>
                   )
               }
-              <div onClick={()=> deleteHero(hero.id)}>
-                <Icons.DeleteHero data-tooltip-id={`delete-hero-${hero.id}`} color="red"/>
-                <Tooltip id={`delete-hero-${hero.id}`} place="top" content="Excluir Herói" />
-              </div>
+              { hero.is_active &&
+                <div onClick={()=> {
+                  if (window.confirm(`Tem certeza que deseja excluir ${hero.name}?`))
+                   deleteHero(hero.id)
+               }}>
+                 <Icons.DeleteHero data-tooltip-id={`delete-hero-${hero.id}`} color="red"/>
+                 <Tooltip id={`delete-hero-${hero.id}`} place="top" content="Excluir Herói" />
+               </div>
+              }
+             
                 
             </div>
             

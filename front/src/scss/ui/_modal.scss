@@ -45,7 +45,10 @@
             &__label {
                 width: 80px;
             }
-            &__input {
+            &__inpt{
+              display: flex;
+              flex-direction: column;
+              &__input {
                 border: 1px solid grey;
                 border-radius: 5px;
                 padding: 15px 20px 15px 15px;
@@ -57,7 +60,16 @@
                 @include mixins.responsive('mobile') {
                     width: 200px;
                 }
+                &.error{
+                  border: 1px solid red;
+                }
+              }
+              &__error {
+                font-size: 10px;
+                color: red;
+              }
             }
+            
         }
         &__buttons {
             display: flex;
@@ -78,4 +90,22 @@
     justify-content: center;
     background-color: rgba(128, 128, 128, 0.8);
     z-index: 1000;
+}
+
+.modal-error {
+  box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: white;
+  padding: 40px;
+  border-radius: 5px;
+  gap: 10px;
+  width: 50%;
+  max-width: 700px;
+  @include mixins.responsive('small-tablet') {
+    width: 100%;
+    max-width: 100%;
+  }
 }

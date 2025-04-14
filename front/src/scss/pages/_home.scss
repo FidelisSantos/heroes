@@ -119,4 +119,22 @@
             }
         }
     }
+    &__pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      padding: 16px;
+      &__button {
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+        background-color: white;
+        cursor: pointer;
+        &.active {
+          font-weight: bold;
+          background-color: #eee;
+          border-color: #888;
+        }
+      }
+    }
 }
